@@ -1,9 +1,10 @@
 #include "shell.h"
 
 /**
- * _myhistory - shows the history list, one command by line, preceded
- *              with line numbers, commencing at 0.
- * @info: Structure containing potential arguments. 
+ * _myhistory - displays the history list, one command by line, preceded
+ *              with line numbers, starting at 0.
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
  *  Return: Always 0
  */
 int _myhistory(info_t *info)
@@ -21,17 +22,17 @@ int _myhistory(info_t *info)
  */
 int unset_alias(info_t *info, char *str)
 {
-	char *q, a;
+	char *p, c;
 	int ret;
 
-	q = _strchr(str, '=');
-	if (!q)
+	p = _strchr(str, '=');
+	if (!p)
 		return (1);
-	a = *q;
-	*q = 0;
+	c = *p;
+	*p = 0;
 	ret = delete_node_at_index(&(info->alias),
 		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
-	*q = a;
+	*p = c;
 	return (ret);
 }
 
@@ -44,12 +45,12 @@ int unset_alias(info_t *info, char *str)
  */
 int set_alias(info_t *info, char *str)
 {
-	char *q;
+	char *p;
 
-	q = _strchr(str, '=');
-	if (!q)
+	p = _strchr(str, '=');
+	if (!p)
 		return (1);
-	if (!*++q)
+	if (!*++p)
 		return (unset_alias(info, str));
 
 	unset_alias(info, str);
@@ -64,15 +65,15 @@ int set_alias(info_t *info, char *str)
  */
 int print_alias(list_t *node)
 {
-	char *q = NULL, *c = NULL;
+	char *p = NULL, *a = NULL;
 
 	if (node)
 	{
-		q = _strchr(node->str, '=');
-		for (c = node->str; c <= q; c++)
-			_putchar(*c);
+		p = _strchr(node->str, '=');
+		for (a = node->str; a <= p; a++)
+			_putchar(*a);
 		_putchar('\'');
-		_puts(q + 1);
+		_puts(p + 1);
 		_puts("'\n");
 		return (0);
 	}
@@ -87,8 +88,8 @@ int print_alias(list_t *node)
  */
 int _myalias(info_t *info)
 {
-	int s = 0;
-	char *q = NULL;
+	int i = 0;
+	char *p = NULL;
 	list_t *node = NULL;
 
 	if (info->argc == 1)
@@ -101,13 +102,13 @@ int _myalias(info_t *info)
 		}
 		return (0);
 	}
-	for (s = 1; info->argv[s]; s++)
+	for (i = 1; info->argv[i]; i++)
 	{
-		q = _strchr(info->argv[s], '=');
-		if (q)
-			set_alias(info, info->argv[s]);
+		p = _strchr(info->argv[i], '=');
+		if (p)
+			set_alias(info, info->argv[i]);
 		else
-			print_alias(node_starts_with(info->alias, info->argv[s], '='));
+			print_alias(node_starts_with(info->alias, info->argv[i], '='));
 	}
 
 	return (0);
