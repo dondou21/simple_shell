@@ -13,7 +13,7 @@ int _erratoi(char *s)
 
 	if (*s == '+')
 		s++;  /* TODO: why does this make main return 255? */
-	for (a = 0;  s[a] != '\0'; i++)
+	for (a = 0;  s[a] != '\0'; a++)
 	{
 		if (s[a] >= '0' && s[a] <= '9')
 		{
