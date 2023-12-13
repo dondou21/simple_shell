@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _myhistory - displays the history list, one command by line, preceded
+ * _myhistory - shows the history list, one command by line, preceded
  *              with line numbers, starting at 0.
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
@@ -88,7 +88,7 @@ int print_alias(list_t *node)
  */
 int _myalias(info_t *info)
 {
-	int i = 0;
+	int a = 0;
 	char *p = NULL;
 	list_t *node = NULL;
 
@@ -102,13 +102,13 @@ int _myalias(info_t *info)
 		}
 		return (0);
 	}
-	for (i = 1; info->argv[i]; i++)
+	for (a = 1; info->argv[a]; a++)
 	{
-		p = _strchr(info->argv[i], '=');
+		p = _strchr(info->argv[a], '=');
 		if (p)
-			set_alias(info, info->argv[i]);
+			set_alias(info, info->argv[a]);
 		else
-			print_alias(node_starts_with(info->alias, info->argv[i], '='));
+			print_alias(node_starts_with(info->alias, info->argv[a], '='));
 	}
 
 	return (0);
